@@ -1,0 +1,23 @@
+{
+  "name": "dwpTechTest",
+  "version": "1.0.0",
+  "description": "Tech Test for DWP to find users within 50 miles of London",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acarriedev/dwpTechTest.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/acarriedev/dwpTechTest/issues"
+  },
+  "homepage": "https://github.com/acarriedev/dwpTechTest#readme",
+  "devDependencies": {
+    "jest": "^26.2.0"
+  }
+}
