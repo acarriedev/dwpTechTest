@@ -19,5 +19,11 @@
   "homepage": "https://github.com/acarriedev/dwpTechTest#readme",
   "devDependencies": {
     "jest": "^26.2.0"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2"
   }
 }
