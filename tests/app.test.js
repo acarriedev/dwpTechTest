@@ -26,6 +26,28 @@ describe("Tests app routes", () => {
             expect(Array.isArray(body.users)).toBe(true);
           });
       });
+
+      test("status: 200 each of the users all have listed properties - id, first_name, last_name, email, ip_address, latitude, longitude", () => {
+        return request(app)
+          .get("/api/users/city/london")
+          .expect(200)
+          .then(({ body: { users } }) => {
+            users.forEach((user) => {
+              const userProperties = Object.keys(user);
+              expect(userProperties).toEqual(
+                expect.arrayContaining([
+                  "id",
+                  "first_name",
+                  "last_name",
+                  "email",
+                  "ip_address",
+                  "latitude",
+                  "longitude",
+                ])
+              );
+            });
+          });
+      });
     });
   });
 });
