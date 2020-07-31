@@ -71,6 +71,15 @@ describe("Tests app routes", () => {
           });
           return Promise.all(caseRequests);
         });
+
+        test("status: 200 returns empty array when no users found for the specified city", () => {
+          return request(app)
+            .get("/api/users/city/leeds")
+            .expect(200)
+            .then(({ body: { users } }) => {
+              expect(users.length).toBe(0);
+            });
+        });
       });
 
       test("INVALID METHODS", () => {
