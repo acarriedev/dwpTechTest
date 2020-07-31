@@ -16,37 +16,61 @@ describe("Tests app routes", () => {
   });
 
   describe("/users", () => {
-    describe("/city/london - GET request retrieves users listed as living in London", () => {
-      test("status: 200 returns an array of users", () => {
-        return request(app)
-          .get("/api/users/city/london")
-          .expect(200)
-          .then(({ body }) => {
-            expect(body).toHaveProperty("users");
-            expect(Array.isArray(body.users)).toBe(true);
-          });
-      });
-
-      test("status: 200 each of the users all have listed properties - id, first_name, last_name, email, ip_address, latitude, longitude", () => {
-        return request(app)
-          .get("/api/users/city/london")
-          .expect(200)
-          .then(({ body: { users } }) => {
-            users.forEach((user) => {
-              const userProperties = Object.keys(user);
-              expect(userProperties).toEqual(
-                expect.arrayContaining([
-                  "id",
-                  "first_name",
-                  "last_name",
-                  "email",
-                  "ip_address",
-                  "latitude",
-                  "longitude",
-                ])
-              );
+    describe("/city", () => {
+      describe("/london - GET request retrieves users listed as living in London", () => {
+        test("status: 200 returns an array of users", () => {
+          return request(app)
+            .get("/api/users/city/london")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body).toHaveProperty("users");
+              expect(Array.isArray(body.users)).toBe(true);
             });
+        });
+
+        test("status: 200 each of the users all have listed properties - id, first_name, last_name, email, ip_address, latitude, longitude", () => {
+          return request(app)
+            .get("/api/users/city/london")
+            .expect(200)
+            .then(({ body: { users } }) => {
+              users.forEach((user) => {
+                const userProperties = Object.keys(user);
+                expect(userProperties).toEqual(
+                  expect.arrayContaining([
+                    "id",
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "ip_address",
+                    "latitude",
+                    "longitude",
+                  ])
+                );
+              });
+            });
+        });
+
+        test("status: 200 returns ALL users listed as living in London", () => {
+          return request(app)
+            .get("/api/users/city/london")
+            .expect(200)
+            .then(({ body: { users } }) => {
+              expect(users.length).toBe(6);
+            });
+        });
+
+        test("status: 200 returns all users regardless of the case London string is formatted in", () => {
+          const londonCases = ["London", "london", "LONDON", "lOnDoN"];
+          const caseRequests = londonCases.map((londonCase) => {
+            return request(app)
+              .get(`/api/users/city/${londonCase}`)
+              .expect(200)
+              .then(({ body: { users } }) => {
+                expect(users.length).toBe(6);
+              });
           });
+          return Promise.all(caseRequests);
+        });
       });
     });
   });
