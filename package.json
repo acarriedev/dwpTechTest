@@ -4,7 +4,9 @@
   "description": "Tech Test for DWP to find users within 50 miles of London",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server",
+    "test": "jest --watch",
+    "dev-server": "node listen.js"
   },
   "repository": {
     "type": "git",
