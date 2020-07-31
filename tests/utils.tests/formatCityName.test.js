@@ -14,6 +14,10 @@ describe("formatCityName()", () => {
       expect(formatCityName("london")).toBe("London");
     });
 
+    test("works when input string is all uppercase", () => {
+      expect(formatCityName("LONDON")).toBe("London");
+    });
+
     test("works when input string is mixed case", () => {
       expect(formatCityName("lOnDoN")).toBe("London");
     });
