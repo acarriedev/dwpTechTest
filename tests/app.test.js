@@ -72,6 +72,20 @@ describe("Tests app routes", () => {
           return Promise.all(caseRequests);
         });
       });
+
+      test("INVALID METHODS", () => {
+        const invalidMethods = ["post", "patch", "put", "delete"];
+        const requests = invalidMethods.map((method) => {
+          return request(app)
+            [method]("/api/users/city/london")
+            .expect(405)
+            .then(({ body: { message } }) => {
+              expect(message).toBe("Method not allowed.");
+            });
+        });
+
+        return Promise.all(requests);
+      });
     });
   });
 });
