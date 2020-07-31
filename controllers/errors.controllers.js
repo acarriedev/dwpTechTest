@@ -4,6 +4,6 @@ exports.send404 = (req, res, next) => {
 
 exports.handleInternalErrors = (err, req, res, next) => {
   const { message } = err;
-
+  console.log(message);
   res.status(500).send({ message });
 };

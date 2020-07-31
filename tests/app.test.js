@@ -14,4 +14,18 @@ describe("Tests app routes", () => {
     });
     return Promise.all(invalidRequests);
   });
+
+  describe("/users", () => {
+    describe("/city/london - GET request retrieves users listed as living in London", () => {
+      test("status: 200 returns an array of users", () => {
+        return request(app)
+          .get("/api/users/city/london")
+          .expect(200)
+          .then(({ body }) => {
+            expect(body).toHaveProperty("users");
+            expect(Array.isArray(body.users)).toBe(true);
+          });
+      });
+    });
+  });
 });
