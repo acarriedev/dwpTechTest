@@ -3,8 +3,8 @@ const request = require("supertest");
 
 describe("Tests app routes", () => {
   test("status: 404 responds with 'Resource not found.' if page doesn't exist on all request methods", () => {
-    const invalidMethods = ["get", "post", "patch", "put", "delete"];
-    const invalidRequests = invalidMethods.map((method) => {
+    const methods = ["get", "post", "patch", "put", "delete"];
+    const invalidRequests = methods.map((method) => {
       return request(app)
         [method]("/incorrect_path")
         .expect(404)
@@ -110,7 +110,7 @@ describe("Tests app routes", () => {
         });
       });
 
-      test("INVALID METHODS", () => {
+      test("status: 405 INVALID METHODS", () => {
         const invalidMethods = ["post", "patch", "put", "delete"];
         const requests = invalidMethods.map((method) => {
           return request(app)

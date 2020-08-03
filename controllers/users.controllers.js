@@ -4,7 +4,9 @@ const { filterUsersByCity } = require("../utils/filterUsersByCity");
 const { cityCoordinates } = require("../data/cityCoordinates");
 
 const getUsersByCity = async (req, res, next) => {
-  const { city } = req.params;
+  const {
+    params: { city },
+  } = req;
   const formattedCity = formatCityName(city);
   const cityLongLat = cityCoordinates[formattedCity];
 
