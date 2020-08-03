@@ -4,7 +4,7 @@
   "description": "Tech Test for DWP to find users within 50 miles of London",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server",
+    "start": "nodemon listen.js",
     "test": "jest --watch",
     "dev-server": "node listen.js"
   },
