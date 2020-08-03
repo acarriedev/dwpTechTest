@@ -7,8 +7,7 @@ describe("filterUsersByCity()", () => {
     test("doesn't mutate input users array", () => {
       const filteredUsers = filterUsersByCity(
         testUsers,
-        "London",
-        cityCoordinates
+        cityCoordinates["London"]
       );
 
       expect(filteredUsers).not.toBe(testUsers);
@@ -46,13 +45,24 @@ describe("filterUsersByCity()", () => {
     test("doesn't mutate input user objects", () => {
       const filteredUsers = filterUsersByCity(
         testUsers,
-        "London",
-        cityCoordinates
+        cityCoordinates["London"]
       );
 
       filteredUsers.forEach((user, index) => {
         expect(user).not.toBe(testUsers[index]);
       });
+    });
+  });
+
+  describe("returns an array of user objects filtered by the inputted city coordinates", () => {
+    test("returns an empty array when no users in the input array", () => {
+      expect(filterUsersByCity([], cityCoordinates["London"])).toEqual([]);
+    });
+
+    test("returns an empty array when no users match input city coordinates", () => {
+      expect(filterUsersByCity(testUsers, cityCoordinates["Glasgow"])).toEqual(
+        []
+      );
     });
   });
 });
