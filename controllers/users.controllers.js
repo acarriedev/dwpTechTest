@@ -1,7 +1,7 @@
-const { fetchUsersByCity } = require("../models/city.models");
+const { fetchUsersByCity } = require("../models/users.models");
 const { formatCityName } = require("../utils/formatCityName");
 
-exports.getUsersByCity = (req, res, next) => {
+const getUsersByCity = (req, res, next) => {
   const { city } = req.params;
 
   const formattedCity = formatCityName(city);
@@ -14,3 +14,5 @@ exports.getUsersByCity = (req, res, next) => {
     })
     .catch(next);
 };
+
+module.exports = { getUsersByCity };

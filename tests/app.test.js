@@ -20,7 +20,7 @@ describe("Tests app routes", () => {
       describe("/london - GET request retrieves users listed as living in London", () => {
         test("status: 200 returns an array of users", () => {
           return request(app)
-            .get("/api/users/city/london")
+            .get("/api/users/london")
             .expect(200)
             .then(({ body }) => {
               expect(body).toHaveProperty("users");
@@ -30,7 +30,7 @@ describe("Tests app routes", () => {
 
         test("status: 200 each of the users all have listed properties - id, first_name, last_name, email, ip_address, latitude, longitude", () => {
           return request(app)
-            .get("/api/users/city/london")
+            .get("/api/users/london")
             .expect(200)
             .then(({ body: { users } }) => {
               users.forEach((user) => {
@@ -52,7 +52,7 @@ describe("Tests app routes", () => {
 
         test("status: 200 returns ALL users listed as living in London", () => {
           return request(app)
-            .get("/api/users/city/london")
+            .get("/api/users/london")
             .expect(200)
             .then(({ body: { users } }) => {
               expect(users.length).toBe(6);
@@ -63,7 +63,7 @@ describe("Tests app routes", () => {
           const londonCases = ["London", "london", "LONDON", "lOnDoN"];
           const caseRequests = londonCases.map((londonCase) => {
             return request(app)
-              .get(`/api/users/city/${londonCase}`)
+              .get(`/api/users/${londonCase}`)
               .expect(200)
               .then(({ body: { users } }) => {
                 expect(users.length).toBe(6);
@@ -74,7 +74,7 @@ describe("Tests app routes", () => {
 
         test("status: 200 returns empty array when no users found for the specified city", () => {
           return request(app)
-            .get("/api/users/city/leeds")
+            .get("/api/users/leeds")
             .expect(200)
             .then(({ body: { users } }) => {
               expect(users.length).toBe(0);
@@ -86,7 +86,7 @@ describe("Tests app routes", () => {
         const invalidMethods = ["post", "patch", "put", "delete"];
         const requests = invalidMethods.map((method) => {
           return request(app)
-            [method]("/api/users/city/london")
+            [method]("/api/users/london")
             .expect(405)
             .then(({ body: { message } }) => {
               expect(message).toBe("Method not allowed.");

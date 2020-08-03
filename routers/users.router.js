@@ -1,6 +1,7 @@
 const usersRouter = require("express").Router();
-const cityRouter = require("./city.router");
+const { getUsersByCity } = require("../controllers/users.controllers");
+const { handle405s } = require("../controllers/errors.controllers");
 
-usersRouter.use("/city", cityRouter);
+usersRouter.route("/:city").get(getUsersByCity).all(handle405s);
 
 module.exports = usersRouter;
