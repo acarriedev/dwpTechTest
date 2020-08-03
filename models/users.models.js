@@ -4,10 +4,18 @@ axios.defaults.adapter = require("axios/lib/adapters/http");
 
 const baseURL = "https://bpdts-test-app.herokuapp.com";
 
-const fetchUsersByCity = (city) => {
-  return axios.get(`${baseURL}/city/${city}/users`).then(({ data }) => {
-    return data;
-  });
+const fetchAllUsers = async () => {
+  const allUsers = await axios.get(`${baseURL}/users`);
+  const { data } = allUsers;
+
+  return data;
 };
 
-module.exports = { fetchUsersByCity };
+const fetchUsersByCity = async (city) => {
+  const usersByCity = await axios.get(`${baseURL}/city/${city}/users`);
+  const { data } = usersByCity;
+
+  return data;
+};
+
+module.exports = { fetchAllUsers, fetchUsersByCity };
