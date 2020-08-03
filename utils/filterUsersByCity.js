@@ -1,10 +1,16 @@
-const filterUsersByCity = (users, cityCoordinates) => {
-  // Take a an array of user objects, coordinates
-  // returns a new array of objects filtered by the city coordinates
-  // uses haversine to determine the filter for the users
-  // works for parsing from string
+const haversine = require("haversine");
 
-  return [];
+const filterUsersByCity = (users, cityCoordinates) => {
+  const filteredUsers = users.filter((user) => {
+    const { latitude, longitude } = user;
+    return haversine(
+      cityCoordinates,
+      { latitude, longitude },
+      { threshold: 50, unit: "mile" }
+    );
+  });
+
+  return filteredUsers;
 };
 
 module.exports = { filterUsersByCity };
