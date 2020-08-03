@@ -16,8 +16,8 @@ describe("Tests app routes", () => {
   });
 
   describe("/users", () => {
-    describe("/city", () => {
-      describe("/london - GET request retrieves users listed as living in London", () => {
+    describe("/:city", () => {
+      describe("london - GET request retrieves users listed as living in London and users located within 50 miles of London", () => {
         test("status: 200 returns an array of users", () => {
           return request(app)
             .get("/api/users/london")
@@ -50,12 +50,40 @@ describe("Tests app routes", () => {
             });
         });
 
+        test("status: 200 returned results included people who have listed themselves as living in london", () => {
+          return request(app)
+            .get("/api/users/london")
+            .expect(200)
+            .then(({ body: { users } }) => {
+              const londonListedIds = users.map(({ id }) => {
+                return id;
+              });
+              expect(londonListedIds).toEqual(
+                expect.arrayContaining([135, 396, 520, 658, 688, 794])
+              );
+            });
+        });
+
+        test("status: 200 returned results included people whos location is within 50 miles of London", () => {
+          return request(app)
+            .get("/api/users/london")
+            .expect(200)
+            .then(({ body: { users } }) => {
+              const londonLocatedIds = users.map(({ id }) => {
+                return id;
+              });
+              expect(londonLocatedIds).toEqual(
+                expect.arrayContaining([266, 322, 554])
+              );
+            });
+        });
+
         test("status: 200 returns ALL users listed as living in London", () => {
           return request(app)
             .get("/api/users/london")
             .expect(200)
             .then(({ body: { users } }) => {
-              expect(users.length).toBe(6);
+              expect(users.length).toBe(9);
             });
         });
 
@@ -66,7 +94,7 @@ describe("Tests app routes", () => {
               .get(`/api/users/${londonCase}`)
               .expect(200)
               .then(({ body: { users } }) => {
-                expect(users.length).toBe(6);
+                expect(users.length).toBe(9);
               });
           });
           return Promise.all(caseRequests);
@@ -74,7 +102,7 @@ describe("Tests app routes", () => {
 
         test("status: 200 returns empty array when no users found for the specified city", () => {
           return request(app)
-            .get("/api/users/leeds")
+            .get("/api/users/glasgow")
             .expect(200)
             .then(({ body: { users } }) => {
               expect(users.length).toBe(0);

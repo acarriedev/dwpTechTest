@@ -1,18 +1,24 @@
-const { fetchUsersByCity } = require("../models/users.models");
+const { fetchAllUsers, fetchUsersByCity } = require("../models/users.models");
 const { formatCityName } = require("../utils/formatCityName");
+const { filterUsersByCity } = require("../utils/filterUsersByCity");
+const { cityCoordinates } = require("../data/cityCoordinates");
 
-const getUsersByCity = (req, res, next) => {
+const getUsersByCity = async (req, res, next) => {
   const { city } = req.params;
-
   const formattedCity = formatCityName(city);
+  const cityLongLat = cityCoordinates[formattedCity];
 
-  fetchUsersByCity(formattedCity)
-    .then((data) => {
-      const usersByCity = { users: data };
+  try {
+    const allUsers = await fetchAllUsers();
+    const listedUsers = await fetchUsersByCity(formattedCity);
+    const locationUsers = filterUsersByCity(allUsers, cityLongLat);
 
-      res.send(usersByCity);
-    })
-    .catch(next);
+    const usersByCity = { users: [...listedUsers, ...locationUsers] };
+
+    res.send(usersByCity);
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = { getUsersByCity };
