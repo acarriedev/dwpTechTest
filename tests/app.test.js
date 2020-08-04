@@ -83,7 +83,7 @@ describe("Tests app routes", () => {
             .get("/api/users/london")
             .expect(200)
             .then(({ body: { users } }) => {
-              expect(users.length).toBe(9);
+              expect(users).toHaveLength(9);
             });
         });
 
@@ -94,7 +94,7 @@ describe("Tests app routes", () => {
               .get(`/api/users/${londonCase}`)
               .expect(200)
               .then(({ body: { users } }) => {
-                expect(users.length).toBe(9);
+                expect(users).toHaveLength(9);
               });
           });
           return Promise.all(caseRequests);
@@ -105,7 +105,7 @@ describe("Tests app routes", () => {
             .get("/api/users/glasgow")
             .expect(200)
             .then(({ body: { users } }) => {
-              expect(users.length).toBe(0);
+              expect(users).toHaveLength(0);
             });
         });
       });
